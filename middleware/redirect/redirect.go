@@ -20,7 +20,7 @@ func (rd Redirect) ServeHTTP(w http.ResponseWriter, r *http.Request) (int, error
 	for _, rule := range rd.Rules {
 		if rule.From == "/" {
 			// Catchall redirect preserves path (TODO: Standardize/formalize this behavior)
-			http.Redirect(w, r, strings.TrimSuffix(rule.To, "/")+r.URL.Path, rule.Code)
+			http.Redirect(w, r, strings.TrimSuffix(rule.To, "/")+r.URL.RequestURI(), rule.Code)
 			return 0, nil
 		}
 		if r.URL.Path == rule.From {
