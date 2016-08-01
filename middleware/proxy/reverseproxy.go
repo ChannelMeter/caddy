@@ -103,10 +103,20 @@ var hopHeaders = []string{
 	"Upgrade",
 }
 
+var DefaultTransport http.RoundTripper = &http.Transport{
+	Proxy: http.ProxyFromEnvironment,
+	Dial: (&net.Dialer{
+		Timeout:   30 * time.Second,
+		KeepAlive: 30 * time.Second,
+	}).Dial,
+	TLSHandshakeTimeout: 10 * time.Second,
+	MaxIdleConnsPerHost: 64,
+}
+
 func (p *ReverseProxy) ServeHTTP(rw http.ResponseWriter, req *http.Request, extraHeaders http.Header) error {
 	transport := p.Transport
 	if transport == nil {
-		transport = http.DefaultTransport
+		transport = DefaultTransport
 	}
 
 	outreq := new(http.Request)
