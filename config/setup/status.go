@@ -54,8 +54,7 @@ func statusParse(c *Controller) ([]status.Config, error) {
 		}
 
 		// Save configuration
-		err = appendCfg(sc)
-		if err != nil {
+		if err := appendCfg(sc); err != nil {
 			return configs, err
 		}
 	}
