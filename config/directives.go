@@ -51,6 +51,7 @@ var directiveOrder = []directive{
 	{"git", setup.Git},
 
 	// Directives that inject handlers (middleware)
+	{"status", setup.Status},
 	{"log", setup.Log},
 	{"gzip", setup.Gzip},
 	{"errors", setup.Errors},
