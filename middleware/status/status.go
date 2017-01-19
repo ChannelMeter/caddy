@@ -3,7 +3,6 @@ package status
 import (
 	"fmt"
 	"net/http"
-	"net/url"
 	"os"
 	"time"
 
@@ -18,16 +17,16 @@ type Status struct {
 }
 
 type Config struct {
-	Path string
-	Code int
-	Body string
+	PathScope string
+	Code      int
+	Body      string
 }
 
 // ServeHTTP implements the middleware.Handler interface.
 func (s Status) ServeHTTP(w http.ResponseWriter, r *http.Request) (int, error) {
 
 	for _, sc := range s.Configs {
-		if !middleware.Path(r.URL.Path).Matches(bc.PathScope) {
+		if !middleware.Path(r.URL.Path).Matches(sc.PathScope) {
 			continue
 		}
 
@@ -44,5 +43,5 @@ func (s Status) ServeHTTP(w http.ResponseWriter, r *http.Request) (int, error) {
 	}
 
 	// Didn't qualify; pass-thru
-	return b.Next.ServeHTTP(w, r)
+	return s.Next.ServeHTTP(w, r)
 }
