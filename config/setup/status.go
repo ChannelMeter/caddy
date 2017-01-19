@@ -2,6 +2,7 @@ package setup
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/mholt/caddy/middleware"
 	"github.com/mholt/caddy/middleware/status"
@@ -46,7 +47,19 @@ func statusParse(c *Controller) ([]status.Config, error) {
 			sc.PathScope = "/"
 		}
 
-		// Second argument would be the body
+		// Second argument would be the code
+		if c.NextArg() {
+			v := c.Val()
+			if n, err := strconv.Atoi(v); err == nil {
+				sc.Code = n
+			} else {
+				return nil, c.Errf("Invalid code '%s' specified for status middleware.", v)
+			}
+		} else {
+			return nil, c.Errf("No code specified for status middleware.")
+		}
+
+		// Third argument would be the body
 		if c.NextArg() {
 			sc.Body = c.Val()
 		} else {
