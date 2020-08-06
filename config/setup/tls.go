@@ -74,7 +74,7 @@ func TLS(c *Controller) (middleware.Middleware, error) {
 
 	// Set default protocol min and max versions - must balance compatibility and security
 	if c.TLS.ProtocolMinVersion == 0 {
-		c.TLS.ProtocolMinVersion = tls.VersionTLS10
+		c.TLS.ProtocolMinVersion = tls.VersionTLS12
 	}
 	if c.TLS.ProtocolMaxVersion == 0 {
 		c.TLS.ProtocolMaxVersion = tls.VersionTLS12
