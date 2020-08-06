@@ -91,8 +91,8 @@ func TLS(c *Controller) (middleware.Middleware, error) {
 // HTTP/2 only supports TLS 1.2 and higher
 var supportedProtocols = map[string]uint16{
 	"ssl3.0": tls.VersionSSL30,
-	"tls1.0": tls.VersionTLS10,
-	"tls1.1": tls.VersionTLS11,
+	// "tls1.0": tls.VersionTLS10,
+	// "tls1.1": tls.VersionTLS11,
 	"tls1.2": tls.VersionTLS12,
 }
 
